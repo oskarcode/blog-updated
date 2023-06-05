@@ -5,6 +5,7 @@ from .models import Post
 
 
 
+
 def post_list(request):
     posts = Post.objects.all()
     return render(request, 'blog_app/post_list.html', {'posts': posts})
@@ -12,6 +13,8 @@ def post_list(request):
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'blog_app/post_detail.html', {'post': post})
+
+
 
 def post_create(request):
     if request.method == 'POST':

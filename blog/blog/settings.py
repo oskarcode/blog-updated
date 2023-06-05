@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-hrfmn!@)1%l)x5s$%^8vh&q@doboyv2ka-lmpf&=d42p3g*i8z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['44.202.86.42','oskarcode.com','www.oskarcode.com']
+ALLOWED_HOSTS = ['44.202.86.42','oskarcode.com','www.oskarcode.com','127.0.0.1']
 
 
 # Application definition
@@ -125,4 +125,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-CSRF_TRUSTED_ORIGINS = ['oskarcode.com','https://oskarcode.com/admin/login','https://*.oskarcode.com']
+CSRF_TRUSTED_ORIGINS = ['https://oskarcode.com/admin/login','https://*.oskarcode.com']
