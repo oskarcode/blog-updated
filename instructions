@@ -4,11 +4,10 @@
 Directories:
 
 
-Project:/home/ubuntu/django-new-blog/
+Project: /home/ubuntu/blog-updated/
+App:/home/ubuntu/blog-updated/blog
 
-App:/home/ubuntu/django-new-blog/blog
-
-Settings.py:/home/ubuntu/django-new-blog/blog/blog
+Settings.py:/home/ubuntu/blog-updated/blog/blog
 
 
 Venv: /home/ubuntu/newportfolio/portfolio_venv/bin
@@ -94,6 +93,59 @@ ExecStart=/home/ubuntu/portfolio_env/bin/gunicorn --workers 3 --bind unix:/run/b
 [Install]
 
 WantedBy=sockets.target
+
+
+
+
+Portfolio:
+server {
+listen 80;
+server_name 44.202.86.42 mycodeforever.com www.mycodeforever.com;
+
+
+location / {
+include proxy_params;
+proxy_pass http://unix:/home/ubuntu/newportfolio/myportfolio/app.sock;
+}
+
+location /static/ {
+ alias /home/ubuntu/newportfolio/static/;
+}
+
+
+location /media/ {
+alias /home/ubuntu/newportfolio/media/;
+}
+
+
+}
+
+
+
+
+Blog:
+
+server {
+listen 80;
+server_name 44.202.86.42 oskarcode.com www.oskarcode.com;
+
+
+location / {
+include proxy_params;
+proxy_pass http://unix:/home/ubuntu/newportfolio/myportfolio/app.sock;
+}
+
+location /static/ {
+ alias /home/ubuntu/newportfolio/static/;
+}
+
+
+location /media/ {
+alias /home/ubuntu/newportfolio/media/;
+}
+
+
+}
 
 
 
