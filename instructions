@@ -1,9 +1,9 @@
 
 
+This is easier than supervisoer 
+refernce ink:  https://www.youtube.com/watch?v=koo3bF2EPqk&t=607s
 
 Directories:
-
-
 Project: /home/ubuntu/blog-updated/
 App:/home/ubuntu/blog-updated/blog
 
@@ -14,51 +14,11 @@ Venv: /home/ubuntu/newportfolio/portfolio_venv/bin
 
 
 
-Portfolio
-Socket:
-
-[Unit]
-
-Description=gunicorn socket
-
-[Socket]
-
-ListenStream=/run/portfolio.sock
-
-[Install]
-
-WantedBy=sockets.target
-
-
-
-Service:
-[Unit]
-
-Description=gunicorn daemon
-
-Requires=portfolio.socket
-
-After=network.target
-
-[Service]
-
-User=ubuntu
-
-Group=ubuntu
-
-WorkingDirectory=/home/ubuntu/portfolio
-
-ExecStart=/home/ubuntu/portfolio_env/bin/gunicorn --workers 3 --bind unix:/run/portfolio.sock portfolio.wsgi:application
-
-
-[Install]
-
-WantedBy=multi-user.target
-
-
-
+1. use the same venv with portfolio site as it has the same packages
+2. set up socket and service file 
 Blog:
 
+Socket file:
 [Unit]
 
 Description=gunicorn socket
@@ -72,6 +32,7 @@ ListenStream=/run/blog.sock
 WantedBy=sockets.target
 
 
+service file:
 
 [Unit]
 
@@ -96,32 +57,7 @@ WantedBy=sockets.target
 
 
 
-
-Portfolio:
-server {
-listen 80;
-server_name 44.202.86.42 mycodeforever.com www.mycodeforever.com;
-
-
-location / {
-include proxy_params;
-proxy_pass http://unix:/home/ubuntu/newportfolio/myportfolio/app.sock;
-}
-
-location /static/ {
- alias /home/ubuntu/newportfolio/static/;
-}
-
-
-location /media/ {
-alias /home/ubuntu/newportfolio/media/;
-}
-
-
-}
-
-
-
+3. Nginx sites-available configuration:
 
 Blog:
 
@@ -148,5 +84,15 @@ alias /home/ubuntu/newportfolio/media/;
 }
 
 
+
+4. when updated, need to run:
+ sudo systemctl start blog.service
+ sudo systemctl restart nginx 
+
+
+
+
+ to do lists:
+ - add login, authentication
 
 
