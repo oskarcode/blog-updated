@@ -3,9 +3,16 @@ from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView,LogoutView
 
 
-
+class MylogoutView(LogoutView):
+    next_page = '/'
+    
+    
+class MyLoginView(LoginView):
+    template_name = 'blog_app/login.html'  # Replace with your own template path
+    success_url = '/'  # Replace with your own success URL
 
 
 
@@ -18,7 +25,7 @@ def post_detail(request, pk):
     return render(request, 'blog_app/post_detail.html', {'post': post})
 
 
-@login_required
+@login_required(login_url='/login/')
 def post_create(request):
     if request.method == 'POST':
         title = request.POST['title']
@@ -27,7 +34,8 @@ def post_create(request):
         return redirect('post_detail', pk=post.pk)
     return render(request, 'blog_app/post_create.html')
 
-@login_required
+
+@login_required(login_url='/login/')
 def post_update(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == 'POST':
@@ -37,7 +45,8 @@ def post_update(request, pk):
         return redirect('post_detail', pk=post.pk)
     return render(request, 'blog_app/post_update.html', {'post': post})
 
-@login_required
+
+@login_required(login_url='/login/')
 def post_delete(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == 'POST':
